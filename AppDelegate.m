@@ -39,6 +39,10 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSPopUpButtonWillPopUpNotification object:nil];
+    if (self.selectedDevice) {
+        [self.selectedDevice stopStream];
+        self.selectedDevice = nil;
+    }
 }
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {

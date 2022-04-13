@@ -14,4 +14,12 @@ Must be running macOS 11.3.1 or lower or macOS 10.15 before Catalina Security Up
 
 Select a UVD compatible USB webcam from the list. If it does not appear, unplug and replug the device. Note that built in FaceTime HD cameras on MacBooks cannot be captured because of `UsbUserClientEntitlementRequired`.
 
-To stop the preview, select the placeholder (first) entry from the list.
+Tested working with the LG UltraFine 5K built-in webcam.
+
+## Issues
+
+Since this is just a PoC, there's a few bugs that's not been resolved.
+
+* Frame tearing is observed. Unsure if this is a libuvc issue or not.
+* Stopping and re-starting a preview fails and the app freezes.
+* Force quitting the app results in the USB device being un-able to be used by the system again. A un-plug and re-plug is required.

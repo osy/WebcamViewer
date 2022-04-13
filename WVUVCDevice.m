@@ -199,6 +199,7 @@ static void streamCallback(struct uvc_frame *frame, void *user_ptr) {
     if ((res = uvc_start_streaming(devh, &ctrl, streamCallback, (__bridge void *)self, 0)) < 0) {
         goto err;
     }
+    NSLog(@"Stream started.");
     self.handle = devh;
     [self setDefaultOptions];
     return YES;
@@ -216,6 +217,7 @@ err:
     if (self.handle) {
         NSLog(@"Stopping stream...");
         uvc_stop_streaming(self.handle);
+        NSLog(@"Stream stopped.");
         libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, LIBUSB_LOG_LEVEL_DEBUG);
         uvc_close(self.handle);
         self.handle = NULL;
