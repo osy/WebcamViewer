@@ -19,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84EC521128071FBE007B415B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CEBA49742806697C005B7A67 /* Webcam Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Webcam Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBA49772806697C005B7A67 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CEBA49782806697C005B7A67 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -53,6 +54,7 @@
 		CEBA496B2806697C005B7A67 = {
 			isa = PBXGroup;
 			children = (
+				84EC521128071FBE007B415B /* README.md */,
 				CEBA49772806697C005B7A67 /* AppDelegate.h */,
 				CEBA49782806697C005B7A67 /* AppDelegate.m */,
 				CEBA497A2806697D005B7A67 /* Assets.xcassets */,
