@@ -6,6 +6,8 @@ set -e
 git submodule init
 git submodule update
 pushd libusb
+git checkout .
+patch -p1 < ../0001-darwin-disable-entitlement-check.patch
 ./autogen.sh
 ./configure --prefix="$PREFIX"
 make install
