@@ -33,46 +33,48 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-        [self refreshDeviceList];
-    });
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(dropdownMenuOpened:) name:NSPopUpButtonWillPopUpNotification object:nil];
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
+    [NSNotificationCenter.defaultCenter removeObserver:self name:NSPopUpButtonWillPopUpNotification object:nil];
 }
-
 
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
     return YES;
 }
 
+- (void)dropdownMenuOpened:(id)sender {
+    [self refreshDeviceList];
+}
+
 - (void)refreshDeviceList {
-    self.devices = WVUVCDevice.allDevices;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.deviceListMenu removeAllItems];
-        NSMenuItem *placeholder = [[NSMenuItem alloc] init];
-        placeholder.title = NSLocalizedString(@"Select device...", "AppDelegate");
-        placeholder.target = self;
-        placeholder.action = @selector(selectDeviceListItem:);
-        placeholder.tag = -1;
-        [self.deviceListMenu addItem:placeholder];
-        NSArray<WVUVCDevice *> *devices = self.devices;
-        for (NSInteger i = 0; i < devices.count; i++) {
-            NSMenuItem *item = [[NSMenuItem alloc] init];
-            item.title = devices[i].name;
-            item.target = self;
-            item.action = @selector(selectDeviceListItem:);
-            item.tag = i;
-            [self.deviceListMenu addItem:item];
-            if ([self.selectedDevice.name isEqualToString:devices[i].name]) {
-                [self.deviceListButton selectItem:item];
+    [self.deviceListMenu removeAllItems];
+    NSMenuItem *placeholder = [[NSMenuItem alloc] init];
+    placeholder.title = NSLocalizedString(@"Select device...", "AppDelegate");
+    placeholder.target = self;
+    placeholder.action = @selector(selectDeviceListItem:);
+    placeholder.tag = -1;
+    [self.deviceListMenu addItem:placeholder];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+        self.devices = WVUVCDevice.allDevices;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSArray<WVUVCDevice *> *devices = self.devices;
+            [self.deviceListMenu removeAllItems];
+            [self.deviceListMenu addItem:placeholder];
+            for (NSInteger i = 0; i < devices.count; i++) {
+                NSMenuItem *item = [[NSMenuItem alloc] init];
+                item.title = devices[i].name;
+                item.target = self;
+                item.action = @selector(selectDeviceListItem:);
+                item.tag = i;
+                [self.deviceListMenu addItem:item];
+                if ([self.selectedDevice.name isEqualToString:devices[i].name]) {
+                    [self.deviceListButton selectItem:item];
+                }
             }
-        }
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-        [self refreshDeviceList];
+        });
     });
 }
 
