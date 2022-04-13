@@ -2,6 +2,7 @@
 
 PREFIX=$PWD/sysroot
 
+set -e
 git submodule init
 git submodule update
 pushd libusb
