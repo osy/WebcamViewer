@@ -16,6 +16,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <libuvc.h>
+#import <libusb.h>
 
 uvc_context_t *uvc_ctx;
 
@@ -23,6 +24,7 @@ int main(int argc, const char * argv[]) {
     if (uvc_init(&uvc_ctx, NULL) < 0) {
         return -1;
     }
+    libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, LIBUSB_LOG_LEVEL_DEBUG);
     @autoreleasepool {
         // Setup code that might create autoreleased objects goes here.
     }
